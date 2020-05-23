@@ -29,31 +29,9 @@ def extract_all_faces(user, filename, id, required_size=(224, 224)):
         x2, y2 = x + width, y + height
         face = pixels[y:y2, x:x2]
         # resize pixels to the model size
-        #imwrite("img/{0}{1}{2}.png".format(user, id, face_id), face)
-        #face_id += 1
         image = Image.fromarray(face)
         image = image.resize(required_size)
         face_array.append(asarray(image))
-    return face_array
-
-
-# extract a single face from a given photograph
-def extract_face(filename, id, required_size=(224, 224)):
-    # load image from file
-    pixels = pyplot.imread(filename)
-    # create the detector, using default weights
-    detector = MTCNN()
-    # detect faces in the image
-    results = detector.detect_faces(pixels)
-    # extract
-    x, y, width, height = results[0]['box']
-    x2, y2 = x + width, y + height
-    face = pixels[y:y2, x:x2]
-    # resize pixels to the model size
-    cv2.imwrite("img/example{0}.png".format(id), face)
-    image = Image.fromarray(face)
-    image = image.resize(required_size)
-    face_array = asarray(image)
     return face_array
 
 
@@ -89,8 +67,8 @@ def is_match(known_embedding, candidate_embedding, thresh=0.5):
     return scoreNum
 
 
-User1 = 'knyazhna_mari'
-User2 = 'bananavano'
+User1 = 'user1'
+User2 = 'user2'
 
 embeddings1 = get_embeddings(User1)
 embeddings2 = get_embeddings(User2)
